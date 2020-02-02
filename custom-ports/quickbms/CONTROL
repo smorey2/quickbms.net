@@ -1,0 +1,10 @@
+Source: quickbms
+Version: 0.10.1
+Homepage: https://aluigi.altervista.org/quickbms.htm
+Description: Universal script based files extractor and reimporter
+Build-Depends:
+Default-Features:
+
+Feature:
+Description:
+Build-Depends:
