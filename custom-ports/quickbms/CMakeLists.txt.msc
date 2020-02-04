@@ -6,7 +6,6 @@ cmake_minimum_required(VERSION 3.8)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(quickbms VERSION 1.0.0 LANGUAGES C CXX)
-set(OPENSSL_ROOT_DIR C:/_GITHUB/smorey2/quickbms.net/_vcpkg/packages/openssl-windows_x64-windows)
 
 # Glob
 file(GLOB libs_zlib libs/zlib/*.c libs/zlib/contrib/infback9/*.c) #different
@@ -93,8 +92,8 @@ file(GLOB libs_amiga libs/amiga/amiga.s)
 set(SOURCE_QUICKBMS
    quickbms.c #error
    #${libs_zlib} #link
-   #${compression} #error
-   #${encryption} #error
+      #${compression} #error
+      #${encryption} #error
    #${libs_lzma}
    #${libs_mspack}
    #${libs_ppmd}
@@ -191,6 +190,7 @@ set(INCLUDE_QUICKBMS
    libs/ucl/include
    libs/capstone/include
 )
+set(OPENSSL_ROOT_DIR C:/_GITHUB/smorey2/quickbms.net/_vcpkg/packages/openssl-windows_x64-windows)
 
 # Executable
 add_executable(${PROJECT_NAME} ${SOURCE_QUICKBMS})
@@ -211,11 +211,15 @@ set(LIBRARY_QUICKBMS
    #libs/libtommath/libtommath.a
 )
 target_link_libraries(${PROJECT_NAME} PUBLIC ${LIBRARY_QUICKBMS})
+#target_compile_options(${PROJECT_NAME} PUBLIC /wd4996 /wd4018 /wd4244 /wd4267 /wd4164 /wd4146 /wd4101 /wd4305 /wd4102) #disable warning C4996, C4018, C4244, C4267, C4164, C4146, C4101, C4305, C4102
+#target_compile_options(${PROJECT_NAME} PUBLIC /wd4013 /wd4028 /wd4133 /wd4005) #disable warning C4013, C4028, C4133, C4477, C4005
+
+# https://docs.microsoft.com/en-us/windows/win32/winprog/windows-data-types?redirectedfrom=MSDN
 target_compile_options(${PROJECT_NAME} PUBLIC -s -O2 -m32 -mtune=generic -static
-   -Wno-int-to-pointer-cast -D_GLIBCXX_IOSTREAM -Wl,--enable-stdcall-fixup -Wl,--large-address-aware -fno-unit-at-a-time -Wno-sign-compare -Wno-sequence-point -Wno-parentheses -Wl,--stack,4194304 -fstack-protector-all -Wstack-protector -fwrapv --param ssp-buffer-size=1 -fno-strict-overflow -Wno-missing-field-initializers -Wformat-security  -Wl,--dynamicbase -Wl,--nxcompat -Wl,--enable-auto-image-base -Wl,--enable-auto-import -fno-omit-frame-pointer -fstack-protector-all -Wall -Wno-pointer-sign -Wno-unused-variable -Wno-unused-function -Wno-cpp -Wno-misleading-indentation -Wno-stack-protector -Wno-unknown-pragmas #-Wno-reorder
-   -Wno-implicit-function-declaration -Wno-deprecated-declarations -Wno-int-in-bool-context -Wno-array-bounds -Wno-stringop-truncation)
+   -Wno-implicit-function-declaration -Wno-deprecated-declarations -Wno-int-in-bool-context -Wno-array-bounds -Wno-stringop-truncation
+   -Wno-int-to-pointer-cast -D_GLIBCXX_IOSTREAM -Wl,--enable-stdcall-fixup -Wl,--large-address-aware -fno-unit-at-a-time -Wno-sign-compare -Wno-sequence-point -Wno-parentheses -Wl,--stack,4194304 -fstack-protector-all -Wstack-protector -fwrapv --param ssp-buffer-size=1 -fno-strict-overflow -Wno-missing-field-initializers -Wformat-security  -Wl,--dynamicbase -Wl,--nxcompat -Wl,--enable-auto-image-base -Wl,--enable-auto-import -fno-omit-frame-pointer -fstack-protector-all -Wall -Wno-pointer-sign -Wno-unused-variable -Wno-unused-function -Wno-cpp -Wno-misleading-indentation -Wno-stack-protector -Wno-unknown-pragmas) #-Wno-reorder
 #target_compile_options(${PROJECT_NAME} PUBLIC -lcomdlg32 icon.o)
-target_compile_options(${PROJECT_NAME} PUBLIC -lgdi32 -lstdc++ -lcrypt32 -lm -lws2_32 -lwinmm -lbfd -liberty -liconv -limagehlp)
+#target_compile_options(${PROJECT_NAME} PUBLIC -lgdi32 -lstdc++ -lcrypt32 -lm -lws2_32 -lwinmm -lbfd -liberty -liconv -limagehlp)
 target_compile_options(${PROJECT_NAME} PUBLIC -Wl,--add-stdcall-alias -Wl,--export-all-symbols -Wl,--exclude-libs,xcompress.lib)
 
 #target_compile_definitions(${PROJECT_NAME} PUBLIC DISABLE_MCRYPT=1 DISABLE_TOMCRYPT=1)

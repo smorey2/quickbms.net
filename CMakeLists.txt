@@ -13,7 +13,7 @@ if(WIN32)
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
       )
       execute_process(
-         COMMAND bootstrap-vcpkg.bat
+         COMMAND bootstrap-vcpkg.bat -disableMetrics
          WORKING_DIRECTORY ${VCPKG}
       )
    endif()
