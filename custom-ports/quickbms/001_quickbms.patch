@@ -1,0 +1,14 @@
+diff --git a/quickbms.c b/quickbms.c
+index 7c380d0..f524435 100644
+--- a/quickbms.c
++++ b/quickbms.c
+@@ -32,6 +32,9 @@
+     #define _FILE_OFFSET_BITS   64
+ #endif
+ 
++#ifdef _WIN32
++#include <windows.h>
++#endif
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>

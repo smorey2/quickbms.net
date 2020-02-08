@@ -6,10 +6,10 @@ vcpkg_download_distfile(ARCHIVE
 
 vcpkg_extract_source_archive_ex(
     OUT_SOURCE_PATH SOURCE_PATH
-    ARCHIVE ${ARCHIVE} 
+    ARCHIVE ${ARCHIVE}
     REF 0.10.1
-    #PATCHES
-    #   CMakeLists.txt
+    PATCHES
+       001_quickbms.patch
 )
 file(INSTALL ${CURRENT_PORT_DIR}/CMakeLists.txt DESTINATION ${SOURCE_PATH})
 

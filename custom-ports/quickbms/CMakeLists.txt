@@ -104,7 +104,7 @@ set(SOURCE_QUICKBMS
    #${libs_bcl}
    #${libs_szip}
    #${libs_lzhl}
-   #${libs_tdcb} #fixed
+   #${libs_tdcb}
    #${extra_mem2mem}
       #${libs_libkirk} #error
    #${libs_7z_advancecomp} #link
@@ -213,7 +213,7 @@ set(LIBRARY_QUICKBMS
 target_link_libraries(${PROJECT_NAME} PUBLIC ${LIBRARY_QUICKBMS})
 target_compile_options(${PROJECT_NAME} PUBLIC -s -O2 -m32 -mtune=generic -static
    -Wno-int-to-pointer-cast -D_GLIBCXX_IOSTREAM -Wl,--enable-stdcall-fixup -Wl,--large-address-aware -fno-unit-at-a-time -Wno-sign-compare -Wno-sequence-point -Wno-parentheses -Wl,--stack,4194304 -fstack-protector-all -Wstack-protector -fwrapv --param ssp-buffer-size=1 -fno-strict-overflow -Wno-missing-field-initializers -Wformat-security  -Wl,--dynamicbase -Wl,--nxcompat -Wl,--enable-auto-image-base -Wl,--enable-auto-import -fno-omit-frame-pointer -fstack-protector-all -Wall -Wno-pointer-sign -Wno-unused-variable -Wno-unused-function -Wno-cpp -Wno-misleading-indentation -Wno-stack-protector -Wno-unknown-pragmas #-Wno-reorder
-   -Wno-implicit-function-declaration -Wno-deprecated-declarations -Wno-int-in-bool-context -Wno-array-bounds -Wno-stringop-truncation)
+   -Wno-comment -Wno-format-security -Wno-implicit-function-declaration -Wno-deprecated-declarations -Wno-int-in-bool-context -Wno-array-bounds -Wno-stringop-truncation)
 #target_compile_options(${PROJECT_NAME} PUBLIC -lcomdlg32 icon.o)
 target_compile_options(${PROJECT_NAME} PUBLIC -lgdi32 -lstdc++ -lcrypt32 -lm -lws2_32 -lwinmm -lbfd -liberty -liconv -limagehlp)
 target_compile_options(${PROJECT_NAME} PUBLIC -Wl,--add-stdcall-alias -Wl,--export-all-symbols -Wl,--exclude-libs,xcompress.lib)
@@ -223,6 +223,7 @@ target_compile_options(${PROJECT_NAME} PUBLIC -Wl,--add-stdcall-alias -Wl,--expo
 #target_compile_definitions(${PROJECT_NAME} PUBLIC _7ZIP_ST=1 E_INVALIDARG=-1)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
+   stricoll=_stricoll
    # source
    _7Z_TYPES_=1
    DENSITY_FORCE_INLINE=inline
