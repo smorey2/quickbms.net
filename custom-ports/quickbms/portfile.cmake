@@ -16,8 +16,7 @@ file(INSTALL ${CURRENT_PORT_DIR}/CMakeLists.txt DESTINATION ${SOURCE_PATH})
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}
     PREFER_NINJA
-    OPTIONS
-        -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_COMPILER=g++
+    OPTIONS -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_COMPILER=g++
 )
 
 vcpkg_install_cmake()
