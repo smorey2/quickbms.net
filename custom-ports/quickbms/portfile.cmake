@@ -1,5 +1,5 @@
 vcpkg_download_distfile(ARCHIVE
-    URLS "https://aluigi.altervista.org/papers/quickbms_src.zip"
+    URLS "https://aluigi.altervista.org/papers/quickbms-src-0.10.1.zip"
     FILENAME "quickbms-current.zip"
     SHA512 f207859ca8f81ce115d2700be0932324b1ad51de7d0571d86fab2d34cc0b3a73c71270edfeb6f16f31962750e18a2ee8906b4a16c242be30db1abd336dd7d3e1
 )

@@ -18,15 +18,15 @@ if(WIN32)
       )
    endif()
 
-   # install quickbms:x64-windows
-   if (NOT IS_DIRECTORY ${VCPKG}/packages/quickbms_x64-windows)
+   # install quickbms:x86-windows
+   if (NOT IS_DIRECTORY ${VCPKG}/packages/quickbms_x86-windows)
       execute_process(
-         COMMAND vcpkg install quickbms:x64-windows --overlay-ports=../custom-ports
+         COMMAND vcpkg install quickbms:x86-windows --overlay-ports=../custom-ports
          WORKING_DIRECTORY ${VCPKG}
       )
    endif()
 
 endif()
 
-add_library(quickbms SHARED empty.cc ${VCPKG}/packages/quickbms_${BITNESS}-windows/lib/quickbms.def)
-target_link_libraries(quickbms ${VCPKG}/packages/quickbms_${BITNESS}-windows/lib/quickbms.lib)
+add_library(quickbms SHARED empty.cc ${VCPKG}/packages/quickbms_32-windows/lib/quickbms.def)
+target_link_libraries(quickbms ${VCPKG}/packages/quickbms_32-windows/lib/quickbms.lib)

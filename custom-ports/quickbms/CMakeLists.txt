@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(quickbms VERSION 1.0.0 LANGUAGES C CXX)
-set(OPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/../../../../packages/openssl-windows_x64-windows)
+project(quickbms VERSION 1.0.0 LANGUAGES C CXX ASM)
+set(OPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/../../../../packages/openssl-windows_x86-windows)
 find_package(OpenSSL REQUIRED)
-set(QBMS_DEPS C:/ProgramData/MinGW/mingw64/lib)
 
 if(WIN32)
    if (NOT EXISTS ${CMAKE_SOURCE_DIR}/icon.o)
@@ -13,7 +12,6 @@ if(WIN32)
       )
    endif()
 endif()
-
 
 ## Librarys
 set(CFLAGS -m32 -s -O2 -fno-stack-protector -fno-unit-at-a-time -fno-omit-frame-pointer -w
@@ -379,16 +377,14 @@ add_library(lua OBJECT ${lua})
 target_compile_options(lua PUBLIC ${CFLAGS})
 
 # extra
-#add_library(_extra OBJECT extra/MemoryModule.c libs/amiga/amiga.s)
-#target_compile_options(_extra PUBLIC ${CFLAGS})
-
+add_library(extra_ OBJECT extra/MemoryModule.c libs/amiga/amiga.s)
+target_compile_options(extra_ PUBLIC ${CFLAGS})
+target_include_directories(extra_ PUBLIC .)
 
 ## Executable
 
-add_executable(${PROJECT_NAME} quickbms.c)
-target_compile_options(${PROJECT_NAME} PUBLIC ${CFLAGS}) #-ldl
-   #-lcomdlg32 -lgdi32 -lstdc++ -lcrypt32 -lm -lws2_32 -lwinmm -lbfd -liberty -liconv -limagehlp
-   #-Wl,--add-stdcall-alias -Wl,--export-all-symbols -Wl,--exclude-libs,xcompress.lib)
+add_executable(${PROJECT_NAME} quickbms.c icon.o)
+target_compile_options(${PROJECT_NAME} PUBLIC ${CFLAGS} -Wl,--add-stdcall-alias -Wl,--export-all-symbols) # -Wl,--exclude-libs,xcompress.lib)
 target_compile_definitions(${PROJECT_NAME} PUBLIC stricoll=_stricoll)
 target_include_directories(${PROJECT_NAME} PUBLIC
    libs/capstone/include
@@ -397,7 +393,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC
    libs/brotli/include
    libs/zstd_aluigi libs/zstd_aluigi/common libs/zstd_aluigi/legacy)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC comdlg32 gdi32 crypt32 ws2_32 winmm bfd iberty iconv imagehlp OpenSSL::SSL 
+target_link_options(${PROJECT_NAME} PUBLIC ${CFLAGS})
+target_link_libraries(${PROJECT_NAME} PUBLIC pthread
+   comdlg32 gdi32 stdc++ crypt32 m ws2_32 winmm bfd iberty iconv imagehlp OpenSSL::SSL 
    #ssp
    zlib
    compression
@@ -474,14 +472,14 @@ target_link_libraries(${PROJECT_NAME} PUBLIC comdlg32 gdi32 crypt32 ws2_32 winmm
    cryptohash-sha1
    capstone
    lua
+   extra_
+   #
+   bcrypt
    #${QBMS_DEPS}/xcompress.lib
-   #-lcomdlg32 icon.o
-   #${QBMS_DEPS}/libssl.dll.a
-   #${QBMS_DEPS}/libcrypto.dll.a
    #${CMAKE_SOURCE_DIR}/libs/libmcrypt/libmcrypt.a
    #${CMAKE_SOURCE_DIR}/libs/libtomcrypt/libtomcrypt.a
    #${CMAKE_SOURCE_DIR}/libs/libtommath/libtommath.a
    )
-   #_extra)
 
 #install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+#set(QBMS_DEPS C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw32/i686-w64-mingw32/lib)

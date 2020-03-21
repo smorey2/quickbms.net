@@ -16,10 +16,10 @@ if os.ishost "windows" then
         description = "Build the native QuickBMS library",
         execute = function ()
             os.execute
-"mkdir _build64 & pushd _build64 \z
+"mkdir _build32 & pushd _build32 \z
 && cmake -G \"Ninja\" ..\\ \z
 && popd \z
-&& cmake --build _build64"
+&& cmake --build _build32"
         end
     }
 
