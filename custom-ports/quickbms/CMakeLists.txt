@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(quickbms VERSION 1.0.0 LANGUAGES C CXX ASM)
+project(quickbms VERSION 1.0.0 LANGUAGES C CXX ASM) #ASM_MASM
 set(OPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/../../../../packages/openssl-windows_x86-windows)
 find_package(OpenSSL REQUIRED)
+set(DEP_LIB ${CMAKE_SOURCE_DIR}/0.0.0-97824d97d9/lib)
 
 if(WIN32)
    if (NOT EXISTS ${CMAKE_SOURCE_DIR}/icon.o)
@@ -376,15 +377,21 @@ file(GLOB lua libs/lua/src/*.c)
 add_library(lua OBJECT ${lua})
 target_compile_options(lua PUBLIC ${CFLAGS})
 
+# libs/zenlib
+#add_library(zenlib libs/zenlib/ZenLib.asm libs/zenlib/ZenLib.def)
+#target_compile_options(zenlib PUBLIC -c)
+
 # extra
-add_library(extra_ OBJECT extra/MemoryModule.c libs/amiga/amiga.s)
-target_compile_options(extra_ PUBLIC ${CFLAGS})
-target_include_directories(extra_ PUBLIC .)
+add_library(extra OBJECT extra/MemoryModule.c libs/amiga/amiga.s)
+target_compile_options(extra PUBLIC ${CFLAGS})
+target_include_directories(extra PUBLIC .)
 
 ## Executable
 
-add_executable(${PROJECT_NAME} quickbms.c icon.o)
-target_compile_options(${PROJECT_NAME} PUBLIC ${CFLAGS} -Wl,--add-stdcall-alias -Wl,--export-all-symbols) # -Wl,--exclude-libs,xcompress.lib)
+add_executable(${PROJECT_NAME} quickbms.c
+   icon.o
+   ${CMAKE_SOURCE_DIR}/libs/zenlib/ZenLib.obj)
+target_compile_options(${PROJECT_NAME} PUBLIC ${CFLAGS} -Wl,--enable-stdcall-fixup -Wl,--add-stdcall-alias -Wl,--export-all-symbols -Wl,--exclude-libs,xcompress.lib)
 target_compile_definitions(${PROJECT_NAME} PUBLIC stricoll=_stricoll)
 target_include_directories(${PROJECT_NAME} PUBLIC
    libs/capstone/include
@@ -405,7 +412,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC pthread
    ppmd
    aplib
    brieflz
-   #${CMAKE_SOURCE_DIR}/compression/jcalg1_static.lib
+   ${CMAKE_SOURCE_DIR}/compression/jcalg1_static.lib
    zziplib
    bcl
    szip
@@ -472,14 +479,12 @@ target_link_libraries(${PROJECT_NAME} PUBLIC pthread
    cryptohash-sha1
    capstone
    lua
-   extra_
-   #
+   extra
+   ${DEP_LIB}/xcompress.lib
    bcrypt
-   #${QBMS_DEPS}/xcompress.lib
-   #${CMAKE_SOURCE_DIR}/libs/libmcrypt/libmcrypt.a
-   #${CMAKE_SOURCE_DIR}/libs/libtomcrypt/libtomcrypt.a
-   #${CMAKE_SOURCE_DIR}/libs/libtommath/libtommath.a
+   #${DEP_LIB}/libmcrypt/libmcrypt.a
+   #${DEP_LIB}/libtomcrypt/libtomcrypt.a
+   #${DEP_LIB}/libtommath/libtommath.a
    )
 
-#install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-#set(QBMS_DEPS C:/ProgramData/chocolatey/lib/mingw/tools/install/mingw32/i686-w64-mingw32/lib)
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)

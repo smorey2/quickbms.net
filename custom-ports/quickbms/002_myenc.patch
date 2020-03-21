@@ -1,0 +1,17 @@
+diff --git a/myenc.c b/myenc.c
+index bc544dd..88d0506 100644
+--- a/myenc.c
++++ b/myenc.c
+@@ -1321,8 +1321,12 @@ int xor_prev_next(xor_prev_next_context *ctx, u8 *data, int datalen, int encrypt
+ 
+ #ifdef WIN32
+ #include "windows.h"
++#if defined(__BCRYPT_H__) && !defined(BCrypt_init)
++#define BCrypt_init() -1
++#else
+ #include "extra/mybcrypt.h"
+ #endif
++#endif
+ 
+ typedef struct {
+     // currently I prefer to store the key and ivec instead of the BCRYPT_*, this is just an initial implementation and ivec is necessary anyway;
