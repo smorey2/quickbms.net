@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.8)
 
 project(quickbms VERSION 1.0.0 LANGUAGES C CXX ASM) #ASM_MASM
 set(OPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/../../../../packages/openssl-windows_x86-windows)
-find_package(OpenSSL REQUIRED)
 set(DEP_LIB ${CMAKE_SOURCE_DIR}/0.0.0-97824d97d9/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../../../../packages/quickbms_x86-windows/bin)
+find_package(OpenSSL REQUIRED)
 
 if(WIN32)
    if (NOT EXISTS ${CMAKE_SOURCE_DIR}/icon.o)
@@ -487,4 +488,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC pthread
    #${DEP_LIB}/libtommath/libtommath.a
    )
 
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+file(GLOB DLL
+  "${CMAKE_SOURCE_DIR}/../../../../packages/openssl-windows_x86-windows/bin/*.dll"
+)
+file(COPY ${DLL} DESTINATION ${CMAKE_SOURCE_DIR}/../../../../packages/quickbms_x86-windows/bin)
