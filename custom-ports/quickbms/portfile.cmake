@@ -22,7 +22,8 @@ vcpkg_extract_source_archive_ex(
     REF 0.10.1
     PATCHES
        001_quickbms.patch
-       002_myenc.patch
+       002_quickbms.patch
+       003_myenc.patch
 )
 vcpkg_extract_source_archive_ex(
     OUT_SOURCE_PATH SOURCE_PATH_DEP
