@@ -26,12 +26,11 @@ if os.ishost("windows") then
                 os.execute "cd _vcpkg && vcpkg install quickbms:x86-windows --overlay-ports=../custom-ports"
             end
             -- build quickbms:x86-windows
-            if not os.isfile("_vcpkg/packages/quickbms_x86-windows/bin/quickbms.exe") then
+            if true or not os.isfile("_vcpkg/packages/quickbms_x86-windows/bin/quickbms.exe") then
                 os.execute "cd _vcpkg/buildtrees/quickbms/src/0.10.1-615638c868/ && build.cmd"
             end
         end,
         execute = function ()
-            print("make")
         end
     }
 
