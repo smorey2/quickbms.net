@@ -1,6 +1,9 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.14)
+set(CMAKE_C_COMPILER gcc)
+set(CMAKE_CXX_COMPILER g++)
+set(CMAKE_ASM_COMPILER gcc)
 
-project(quickbms VERSION 1.0.0 LANGUAGES C CXX ASM) #ASM_MASM
+project(quickbms VERSION 1.0.0 LANGUAGES C CXX ASM)
 set(OPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/../../../../packages/openssl-windows_x86-windows)
 set(DEP_LIB ${CMAKE_SOURCE_DIR}/0.0.0-97824d97d9/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../../../../packages/quickbms_x86-windows/bin)

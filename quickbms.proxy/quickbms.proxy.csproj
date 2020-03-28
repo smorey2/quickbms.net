@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Authors>blcnet</Authors>
+    <Product></Product>
+    <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/smorey2/quickbms.net</PackageProjectUrl>
+    <Description>.net marshal to the QuickBms native library</Description>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\_vcpkg\packages\quickbms_x86-windows\bin\libcrypto-1_1.dll" Link="x86\libcrypto-1_1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\_vcpkg\packages\quickbms_x86-windows\bin\libssl-1_1.dll" Link="x86\libssl-1_1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\_vcpkg\packages\quickbms_x86-windows\bin\quickbms.exe" Link="x86\quickbms.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\quickbms.core\quickbms.core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="x86\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JKang.IpcServiceFramework.Server" Version="2.3.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.3" />
+  </ItemGroup>
+
+</Project>

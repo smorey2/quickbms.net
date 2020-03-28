@@ -1,15 +1,8 @@
-set(VCPKG_LIBRARY_LINKAGE dynamic)
+set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE ${CURRENT_PACKAGES_DIR}/../../scripts/toolchains/mingw.cmake)
 
-if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
-    set(ARCH_PATH "win64")
-elseif(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
-    set(ARCH_PATH "win32")
+if (VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
 else()
-    message(FATAL_ERROR "Package only supports x64 and x86 windows.")
-endif()
-
-if(VCPKG_CMAKE_SYSTEM_NAME)
-    message(FATAL_ERROR "Package only supports windows desktop.")
+    message(FATAL_ERROR "Package only supports x86.")
 endif()
 
 vcpkg_download_distfile(ARCHIVE
@@ -38,20 +31,16 @@ vcpkg_extract_source_archive_ex(
     NO_REMOVE_ONE_LEVEL
     WORKING_DIRECTORY ${SOURCE_PATH}
 )
+file(INSTALL ${CURRENT_PORT_DIR}/build.cmd DESTINATION ${SOURCE_PATH})
+file(INSTALL ${CURRENT_PORT_DIR}/custom.c DESTINATION ${SOURCE_PATH})
 file(INSTALL ${CURRENT_PORT_DIR}/CMakeLists.txt DESTINATION ${SOURCE_PATH})
 
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}
     PREFER_NINJA
-    OPTIONS -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_COMPILER=g++
 )
 
 vcpkg_install_cmake()
 
-# Handle copyright
 file(INSTALL ${SOURCE_PATH}/gpl-2.0.txt DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT} RENAME copyright)
-
-#file(MAKE_DIRECTORY
-#    ${CURRENT_PACKAGES_DIR}/lib
-#    ${CURRENT_PACKAGES_DIR}/bin
-#)
+file(COPY ${CMAKE_CURRENT_LIST_DIR}/usage DESTINATION ${CURRENT_PACKAGES_DIR}/share/${PORT})

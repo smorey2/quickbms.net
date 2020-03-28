@@ -1,4 +1,4 @@
-if os.ishost "windows" then
+if os.ishost("windows") then
 
     -- Windows
     newaction
@@ -14,30 +14,24 @@ if os.ishost "windows" then
     {
         trigger     = "native",
         description = "Build the native QuickBMS library",
+        onStart = function()
+            -- install vcpkg
+            if not os.isdir("_vcpkg") then
+                print("vcpkg does not exist. installing...")
+                os.execute "git.exe clone https://github.com/Microsoft/vcpkg.git _vcpkg"
+                os.execute "cd _vcpkg && bootstrap-vcpkg.bat -disableMetrics"
+            end
+            -- install quickbms:x86-windows
+            if not os.isdir("_vcpkg/packages/quickbms_x86-windows") then
+                os.execute "cd _vcpkg && vcpkg install quickbms:x86-windows --overlay-ports=../custom-ports"
+            end
+            -- build quickbms:x86-windows
+            if not os.isfile("_vcpkg/packages/quickbms_x86-windows/bin/quickbms.exe") then
+                os.execute "cd _vcpkg/buildtrees/quickbms/src/0.10.1-615638c868/ && build.cmd"
+            end
+        end,
         execute = function ()
-            os.execute
-"mkdir _build32 & pushd _build32 \z
-&& cmake -G \"Ninja\" ..\\ \z
-&& popd \z
-&& cmake --build _build32"
-        end
-    }
-
-    newaction
-    {
-        trigger     = "native_",
-        description = "Build the native QuickBMS library",
-        execute = function ()
-            os.execute "mkdir _build32 & pushd _build32 \z
-&& cmake -G \"Visual Studio 15 2017\" -DBITNESS=\"x86\" ..\\ \z
-&& popd \z
-&& mkdir _build64 & pushd _build64 \z
-&& cmake -G \"Visual Studio 15 2017 Win64\" -DBITNESS=\"x64\" ..\\ \z
-&& popd \z
-&& cmake --build _build32 --config Release \z
-&& copy _build32\\Release\\QuickBMS.exe QuickBMS.Net\\x86 \z
-&& cmake --build _build64 --config Release \z
-&& copy _build64\\Release\\QuickBMS.exe QuickBMS.Net\\x64"
+            print("make")
         end
     }
 
