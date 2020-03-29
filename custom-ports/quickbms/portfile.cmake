@@ -1,7 +1,4 @@
-set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE ${CURRENT_PACKAGES_DIR}/../../scripts/toolchains/mingw.cmake)
-
-if (VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
-else()
+if (NOT VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
     message(FATAL_ERROR "Package only supports x86.")
 endif()
 

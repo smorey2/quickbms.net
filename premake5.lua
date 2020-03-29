@@ -27,7 +27,7 @@ if os.ishost("windows") then
             end
             -- build quickbms:x86-windows
             if true or not os.isfile("_vcpkg/packages/quickbms_x86-windows/bin/quickbms.exe") then
-                os.execute "cd _vcpkg/buildtrees/quickbms/src/0.10.1-615638c868/ && build.cmd"
+                os.execute "cd _vcpkg/buildtrees/quickbms/src/0.10.1-f19b127b22/ && build.cmd"
             end
         end,
         execute = function ()
