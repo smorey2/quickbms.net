@@ -22,8 +22,7 @@ vcpkg_extract_source_archive_ex(
     REF 0.10.1
     PATCHES
        001_quickbms.patch
-       002_quickbms.patch
-       003_myenc.patch
+       002_myenc.patch
 )
 vcpkg_extract_source_archive_ex(
     OUT_SOURCE_PATH SOURCE_PATH_DEP
@@ -33,8 +32,8 @@ vcpkg_extract_source_archive_ex(
     WORKING_DIRECTORY ${SOURCE_PATH}
 )
 file(INSTALL ${CURRENT_PORT_DIR}/build.cmd DESTINATION ${SOURCE_PATH})
-file(INSTALL ${CURRENT_PORT_DIR}/custom.c DESTINATION ${SOURCE_PATH})
 file(INSTALL ${CURRENT_PORT_DIR}/CMakeLists.txt DESTINATION ${SOURCE_PATH})
+file(INSTALL ${CURRENT_PORT_DIR}/proxy.c DESTINATION ${SOURCE_PATH})
 
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}

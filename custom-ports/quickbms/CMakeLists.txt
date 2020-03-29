@@ -392,7 +392,7 @@ target_include_directories(extra PUBLIC .)
 
 ## Executable
 
-add_executable(${PROJECT_NAME} quickbms.c custom.c
+add_executable(${PROJECT_NAME} quickbms.c
    icon.o
    ${CMAKE_SOURCE_DIR}/libs/zenlib/ZenLib.obj)
 target_compile_options(${PROJECT_NAME} PUBLIC ${CFLAGS} -Wl,--enable-stdcall-fixup -Wl,--add-stdcall-alias -Wl,--export-all-symbols -Wl,--exclude-libs,xcompress.lib)

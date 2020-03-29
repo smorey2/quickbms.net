@@ -1,5 +1,5 @@
 diff --git a/quickbms.c b/quickbms.c
-index 7c380d0..f524435 100644
+index 7c380d0..176b351 100644
 --- a/quickbms.c
 +++ b/quickbms.c
 @@ -32,6 +32,9 @@
@@ -12,3 +12,11 @@ index 7c380d0..f524435 100644
  #include <stdio.h>
  #include <stdlib.h>
  #include <string.h>
+@@ -634,6 +637,7 @@ void quickbms_dll_init(void) {
+ #include "help.c"
+ #include "files_tree.c"
+ #include "ipc.c"
++#include "proxy.c"
+ 
+ 
+ 
