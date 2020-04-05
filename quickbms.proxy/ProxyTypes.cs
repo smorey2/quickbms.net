@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace QuickBms
 {
@@ -7,7 +8,9 @@ namespace QuickBms
     public static partial class NativeMethods
     {
         #region proxy.c
-        [DllImport(LibraryName)] [return: MarshalAs(UnmanagedType.LPStr)] public static extern string proxy_ver();
+        [DllImport(LibraryName)] public static extern int proxy_test(int a);
+        [DllImport(LibraryName)] public static extern IntPtr proxy_ver(); // [return: MarshalAs(UnmanagedType.LPStr)]
+        [DllImport(LibraryName)] public static extern int proxy_script(); //[MarshalAs(UnmanagedType.LPStr)] string text);
         #endregion
     }
 }

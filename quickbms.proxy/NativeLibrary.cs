@@ -286,55 +286,6 @@ namespace QuickBms
 
     #region Marshaler
 
-    public class DStrMarshaler : ICustomMarshaler
-    {
-        /// <summary>
-        /// All custom marshalers require a static factory method with this signature.
-        /// </summary>
-        /// <param name="cookie"></param>
-        /// <returns></returns>
-        public static ICustomMarshaler GetInstance(string cookie) => new DStrMarshaler();
-
-        public object MarshalNativeToManaged(IntPtr pNativeData)
-        {
-            if (pNativeData == IntPtr.Zero)
-                return null;
-            int length;
-            if (Environment.Is64BitProcess) { length = (int)Marshal.ReadInt64(pNativeData); pNativeData += sizeof(long); }
-            else { length = Marshal.ReadInt32(pNativeData); pNativeData += sizeof(int); }
-            var value = Marshal.PtrToStringAnsi(pNativeData, length);
-            return value;
-        }
-
-        public IntPtr MarshalManagedToNative(object ManagedObj)
-        {
-            if (ManagedObj == null)
-                return IntPtr.Zero;
-            var value = (string)ManagedObj;
-            var bytes = Encoding.ASCII.GetBytes(value);
-            IntPtr ptr;
-            if (Environment.Is64BitProcess)
-            {
-                ptr = Marshal.AllocHGlobal(sizeof(long) + value.Length);
-                Marshal.ReadInt64(ptr, value.Length);
-                Marshal.Copy(bytes, 0, ptr + sizeof(long), value.Length);
-            }
-            else
-            {
-                ptr = Marshal.AllocHGlobal(sizeof(int) + value.Length);
-                Marshal.ReadInt32(ptr, value.Length);
-                Marshal.Copy(bytes, 0, ptr + sizeof(int), value.Length);
-            }
-            return ptr;
-        }
-
-        public void CleanUpNativeData(IntPtr pNativeData) => Marshal.FreeHGlobal(pNativeData);
-
-        public void CleanUpManagedData(object ManagedObj) { }
-
-        public int GetNativeDataSize() => -1;
-    }
-
     /// <summary>
     /// ArrayMarshaler
     /// </summary>

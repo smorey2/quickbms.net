@@ -9,5 +9,7 @@ namespace QuickBms.Tests
         {
             NativeMethods.Touch();
         }
+
+        //quickbms -l witcher3.bms "D:\Program Files (x86)\GOG Galaxy\Games\The Witcher 3 Wild Hunt\content\*"
     }
 }

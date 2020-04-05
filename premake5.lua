@@ -4,16 +4,16 @@ if os.ishost("windows") then
     newaction
     {
         trigger     = "solution",
-        description = "Open the QuickBMS.Net solution",
+        description = "Open the quickbms.net solution",
         execute = function ()
-            os.execute "start QuickBMS.Net.sln"
+            os.execute "start quickbms.sln"
         end
     }
 
     newaction
     {
         trigger     = "native",
-        description = "Build the native QuickBMS library",
+        description = "Build the native quickbms library",
         onStart = function()
             -- install vcpkg
             if not os.isdir("_vcpkg") then
@@ -41,7 +41,7 @@ else
      newaction
      {
          trigger     = "solution",
-         description = "Open the QuickBMS.Net solution",
+         description = "Open the quickbms.net solution",
          execute = function ()
          end
      }
@@ -60,9 +60,9 @@ end
 newaction
 {
     trigger     = "build",
-    description = "Build QuickBMS.Net",
+    description = "Build quickbms.proxy",
     execute = function ()
-        os.execute "dotnet build QuickBMS.Net/QuickBMS.Net.csproj"
+        os.execute "dotnet build quickbms.proxy/quickbms.proxy.csproj"
     end
 }
 
@@ -72,7 +72,7 @@ newaction
     description = "Build and run all unit tests",
     execute = function ()
         -- os.execute "premake5 build"
-        os.execute "dotnet test QuickBMS.Tests/QuickBMS.Tests.csproj"
+        os.execute "dotnet test quickbms.tests/quickbms.tests.csproj"
     end
 }
 
@@ -81,7 +81,7 @@ newaction
     trigger     = "pack",
     description = "Package and run all unit tests",
     execute = function ()
-        os.execute "dotnet pack QuickBMS.Net/QuickBMS.Net.csproj --output ../nupkgs --include-source"
+        os.execute "dotnet pack quickbms.net/quickbms.net.csproj --output ../nupkgs --include-source"
     end
 }
 
@@ -92,10 +92,9 @@ newaction
     execute = function ()
         apikey = os.getenv('NUGET_APIKEY')
         os.execute "premake5 pack"
-        os.execute( "dotnet nuget push nupkgs/**/QuickBMS.*.nupkg --api-key " .. apikey .. " --source https://api.nuget.org/v3/index.json" )
+        os.execute( "dotnet nuget push nupkgs/**/quickbms.*.nupkg --api-key " .. apikey .. " --source https://api.nuget.org/v3/index.json" )
     end
 }
-
 
 newaction
 {
@@ -119,7 +118,8 @@ newaction
             ".vs",
             "Debug",
             "Release",
-            "release"
+            "release",
+            "_vcpkg"
         }
         for i,v in ipairs( directories_to_delete ) do
           os.rmdir( v )
